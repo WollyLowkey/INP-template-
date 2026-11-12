@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e8dfd2">
+<title>[Tiêu đề trang web] — [Tên nhóm/thương hiệu]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--yellow:#e8dfd2;--charcoal:#20272b;--sage:#aebdc0;--gray:#30383b;--white:#fff;--black:#000;--line:2px solid #000;--shadow:4px 4px 0 #000;--shadow-lg:8px 8px 0 #000;--ease:cubic-bezier(.2,.8,.2,1);--spring:cubic-bezier(.175,.885,.32,1.275)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{margin:0;font-family:"DM Sans",system-ui,sans-serif;font-weight:500;color:var(--black);background:var(--white);line-height:1.6;overflow-x:hidden}
+body.menu-open{overflow:hidden}
+button,a{font:inherit}
+button:focus-visible,a:focus-visible{outline:3px solid var(--sage);outline-offset:4px}
+h1,h2,h3,p{margin-top:0}
+h1,h2,h3{font-family:"Archivo",sans-serif;font-weight:900;letter-spacing:-.055em;line-height:1.02}
+::selection{background:var(--charcoal);color:var(--yellow)}
+.progress{position:fixed;z-index:30;top:0;left:0;height:5px;width:0;background:var(--charcoal);border-right:2px solid var(--yellow);pointer-events:none}
+.site-header{height:78px;position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,calc((100vw - 1120px)/2));background:#e8dfd2;border-bottom:var(--line);transition:height .25s ease}
+.site-header.scrolled{height:66px}
+.logo{display:inline-flex;align-items:center;gap:10px;color:var(--black);font-family:"Archivo",sans-serif;font-weight:900;text-decoration:none;letter-spacing:-.04em}
+.logo-mark{width:34px;height:34px;display:grid;place-items:center;background:var(--black);color:var(--yellow);border:2px solid var(--black);font-size:19px;transition:transform .45s var(--spring)}
+.logo:hover .logo-mark{transform:rotate(180deg)}
+nav{display:flex;align-items:center;gap:24px}
+nav a{position:relative;color:var(--black);font-size:.92rem;font-weight:800;text-decoration:none;padding:8px 0}
+nav a:after{content:"";position:absolute;left:0;bottom:2px;width:0;height:3px;background:var(--black);transition:width .25s var(--ease)}
+nav a:hover:after,nav a.active:after{width:100%}
+.menu-toggle{display:none;width:44px;height:42px;border:var(--line);background:var(--white);box-shadow:var(--shadow);font-size:20px}
+.wrap{width:min(1120px,calc(100% - 44px));margin-inline:auto}
+.hero{position:relative;isolation:isolate;overflow:hidden;background-color:#e8dfd2;background-image:radial-gradient(#00000020 1px,transparent 1px);background-size:32px 32px;border-bottom:var(--line);padding:clamp(70px,10vw,130px) 0 100px}
+.hero:before,.hero:after{content:"";position:absolute;z-index:-1;border:2px solid var(--black);pointer-events:none}
+.hero:before{width:110px;height:110px;right:8%;top:12%;transform:rotate(18deg);animation:orbit 16s linear infinite}
+.hero:after{width:28px;height:28px;right:42%;bottom:12%;background:var(--sage);box-shadow:6px 6px 0 #000;transform:rotate(45deg);animation:bob 5s ease-in-out infinite}
+.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;align-items:center;gap:clamp(40px,8vw,100px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--white);border:var(--line);border-radius:999px;padding:7px 13px;font-size:.76rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;box-shadow:var(--shadow);animation:rise .7s var(--spring) both}
+.eyebrow-dot{width:8px;height:8px;border-radius:50%;background:var(--charcoal);box-shadow:0 0 0 3px var(--sage)}
+.hero h1{font-size:clamp(3.5rem,8.3vw,7.2rem);margin:25px 0 20px;max-width:760px}
+.word{display:inline-block;opacity:0;transform:translateY(42px) rotate(3deg);animation:word-in .75s var(--spring) forwards}
+.word:nth-child(1){animation-delay:.12s}.word:nth-child(2){animation-delay:.22s}.word:nth-child(4){animation-delay:.34s}.word:nth-child(5){animation-delay:.43s}.word:nth-child(6){animation-delay:.52s}
+.stroke{color:transparent;-webkit-text-stroke:2px var(--black)}
+.hero-copy{max-width:520px;font-size:clamp(1rem,1.5vw,1.16rem);font-weight:600;animation:rise .7s .45s var(--ease) both}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;animation:rise .7s .55s var(--ease) both}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:12px 20px;border:var(--line);border-radius:10px;background:var(--black);color:var(--white);font-weight:800;text-decoration:none;box-shadow:8px 8px 0 #000;cursor:pointer;transition:transform .18s var(--spring),box-shadow .18s var(--spring),background .2s,color .2s}
+.btn:hover{transform:translate(4px,4px);box-shadow:4px 4px 0 #000}
+.btn:active{transform:translate(8px,8px);box-shadow:0 0 0 #000}
+.btn.light{background:var(--white);color:var(--black);box-shadow:4px 4px 0 #000}
+.btn.light:hover{background:var(--sage)}
+.btn.small{min-height:42px;padding:8px 14px;font-size:.9rem;border-radius:8px;box-shadow:4px 4px 0 #000}
+.hero-art{position:relative;min-height:440px;display:grid;place-items:center;perspective:1000px}
+.book-shadow{position:absolute;width:min(310px,75%);height:390px;background:var(--charcoal);border:2px solid var(--black);transform:translate(24px,22px) rotate(5deg)}
+.book-cover{position:relative;width:min(310px,75%);height:390px;display:flex;flex-direction:column;justify-content:space-between;padding:25px;background:var(--sage);border:2px solid var(--black);box-shadow:var(--shadow-lg);transform:rotate(-5deg);transform-style:preserve-3d;transition:transform .2s ease-out}
+.book-top{display:flex;justify-content:space-between;font-size:.72rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.book-title{font:900 clamp(2.6rem,5vw,4rem)/.9 "Archivo",sans-serif;letter-spacing:-.08em;max-width:250px}
+.book-symbol{align-self:flex-end;font-size:4rem;line-height:1;transform:rotate(12deg)}
+.book-bottom{font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-top:2px solid #000;padding-top:12px}
+.art-tag{position:absolute;z-index:2;padding:10px 13px;background:var(--white);border:var(--line);box-shadow:var(--shadow);font-size:.76rem;font-weight:900;transform:rotate(6deg);animation:bob 4s ease-in-out infinite}
+.art-tag.one{top:13%;left:0}.art-tag.two{right:0;bottom:14%;transform:rotate(-7deg);animation-delay:-2s}
+.scroll-cue{position:absolute;left:50%;bottom:23px;transform:translateX(-50%);font-size:.72rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.scroll-cue:after{content:"↓";font-size:1.2rem;animation:nudge 1.4s ease-in-out infinite}
+.marquee{overflow:hidden;background:var(--charcoal);color:var(--sage);border-bottom:var(--line);padding:18px 0;white-space:nowrap}
+.marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee span{font:900 1.15rem "Archivo",sans-serif;letter-spacing:.08em;padding:0 28px;opacity:.82}
+.marquee b{color:var(--yellow);font-size:1rem}
+section{padding:clamp(64px,8vw,100px) 0;border-bottom:var(--line)}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:30px}
+.kicker{display:block;margin-bottom:12px;font-size:.75rem;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+.sec-title{font-size:clamp(2.4rem,5vw,4.3rem);margin:0;max-width:760px}
+.section-note{max-width:280px;margin:0;font-size:.92rem;font-weight:600}
+.player-shell{display:grid;grid-template-columns:1fr auto;gap:25px;align-items:center;background:var(--white);border:var(--line);box-shadow:12px 12px 0 #000;padding:clamp(20px,4vw,38px)}
+.player-meta{display:flex;align-items:center;gap:15px;margin-bottom:18px}
+.player-icon{width:54px;height:54px;flex:none;display:grid;place-items:center;background:var(--yellow);border:var(--line);font-size:1.45rem}
+.player-meta strong{display:block;font:900 1.25rem "Archivo",sans-serif}
+.player-meta small{font-weight:700;color:#3d463f}
+.wave{height:66px;display:flex;align-items:center;gap:5px;margin:8px 0 16px;padding:0 2px}
+.wave i{flex:1;min-width:3px;height:var(--h,30%);background:var(--sage);border:1px solid var(--black);transform-origin:center;transition:height .18s ease,background .18s ease}
+.player-shell.playing .wave i{animation:wave .75s ease-in-out infinite alternate;animation-delay:var(--d,0s);background:var(--charcoal)}
+.player-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.play-button{width:58px;height:58px;border:var(--line);background:var(--yellow);box-shadow:var(--shadow);font-size:1.3rem;cursor:pointer;transition:transform .18s var(--spring),box-shadow .18s}
+.play-button:hover{transform:translate(3px,3px);box-shadow:1px 1px 0 #000}
+.timeline{display:flex;align-items:center;gap:10px;flex:1;min-width:180px;font-size:.78rem;font-weight:800;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--charcoal);cursor:pointer}
+.player-status{font-size:.82rem;font-weight:700;margin:14px 0 0;color:#414a44}
+.chapters{display:flex;flex-direction:column;gap:10px;min-width:220px}
+.chapter{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:var(--line);background:var(--sage);font-size:.82rem;font-weight:900;cursor:pointer;transition:transform .18s,background .18s}
+.chapter:hover:not(:disabled){transform:translateX(4px);background:var(--yellow)}
+.chapter:disabled{opacity:.5;cursor:not-allowed}
+.chapter span:last-child{font-variant-numeric:tabular-nums}
+audio{display:none}
+.quote-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.quote{position:relative;min-height:210px;display:flex;flex-direction:column;justify-content:space-between;padding:24px;background:var(--sage);border:var(--line);box-shadow:var(--shadow);font:800 clamp(1.15rem,2vw,1.55rem)/1.25 "Archivo",sans-serif;transition:transform .3s var(--spring),box-shadow .3s}
+.quote:nth-child(2){background:var(--yellow);transform:translateY(24px)}
+.quote:nth-child(3){background:var(--white)}
+.quote:hover{transform:translate(-4px,-4px) rotate(-1deg);box-shadow:8px 8px 0 #000}
+.quote:nth-child(2):hover{transform:translate(-4px,18px) rotate(1deg)}
+.quote-mark{font-size:3rem;line-height:.7}
+.quote-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px;font:700 .75rem "DM Sans",sans-serif}
+
+.feature-section{background:#d9e0df;background-image:radial-gradient(#00000018 1px,transparent 1px);background-size:32px 32px}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feature-card{min-height:210px;padding:24px;background:var(--white);border:var(--line);box-shadow:var(--shadow);transition:transform .25s var(--spring),box-shadow .25s,background .2s}
+.feature-card:hover{transform:translate(-4px,-4px);box-shadow:8px 8px 0 #000;background:var(--sage)}
+.feature-icon{width:48px;height:48px;display:grid;place-items:center;background:var(--sage);border:var(--line);font-size:1.3rem;margin-bottom:25px;transition:transform .3s var(--spring),background .2s}
+.feature-card:hover .feature-icon{transform:rotate(-9deg) scale(1.08);background:var(--yellow)}
+.feature-card h3{font-size:1.55rem;margin-bottom:10px}
+.feature-card p{margin:0;font-size:.94rem;font-weight:600}
+.dark{background:var(--charcoal);color:var(--white)}
+.dark .kicker{color:var(--sage)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative}
+.steps:before{content:"";position:absolute;left:16%;right:16%;top:35px;height:2px;background:#505850}
+.step{position:relative;z-index:1}
+.step-number{width:70px;height:70px;display:grid;place-items:center;border:4px solid var(--sage);border-radius:50%;background:var(--charcoal);font:900 1.4rem "Archivo",sans-serif;color:var(--yellow);margin-bottom:24px;box-shadow:0 0 0 5px var(--charcoal)}
+.step:nth-child(2) .step-number{border-color:var(--yellow)}
+.step:nth-child(3) .step-number{border-color:var(--white)}
+.step h3{font-size:1.55rem;margin-bottom:10px}
+.step p{color:#d4ded8;max-width:290px;margin:0}
+.rating-panel{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center;background:var(--gray);border:2px solid var(--sage);padding:clamp(22px,4vw,40px);box-shadow:8px 8px 0 #000}
+.rating-intro h3{font-size:2rem;margin-bottom:10px}
+.rating-intro p{color:#d4ded8;margin:0}
+.score{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:13px 0;border-bottom:1px dashed var(--sage);font-weight:800}
+.score:last-child{border:0}
+.stars{color:var(--yellow);letter-spacing:3px;-webkit-text-stroke:1px var(--black);font-size:1.2rem}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.team-card{padding:22px;background:var(--white);border:var(--line);box-shadow:var(--shadow);transition:transform .3s var(--spring),box-shadow .3s}
+.team-card:hover{transform:translate(-4px,-4px) rotate(-.5deg);box-shadow:8px 8px 0 #000}
+.avatar{width:66px;height:66px;display:grid;place-items:center;background:var(--yellow);border:var(--line);font:900 1.5rem "Archivo",sans-serif;margin-bottom:18px;transition:transform .35s var(--spring)}
+.team-card:hover .avatar{transform:rotate(10deg) scale(1.08)}
+.team-card h3{font-size:1.35rem;margin-bottom:5px}
+.team-card p{margin:0;font-size:.9rem;font-weight:600}
+.cta{position:relative;overflow:hidden;background:#e8dfd2;text-align:center;background-image:radial-gradient(#00000018 1px,transparent 1px);background-size:32px 32px}
+.cta h2{font-size:clamp(2.8rem,7vw,5.8rem);max-width:850px;margin:0 auto 25px}
+.cta p{font-weight:700;margin-bottom:25px}
+footer{padding:38px 0;background:var(--charcoal);color:var(--white)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.footer-brand{font:900 1.2rem "Archivo",sans-serif}
+.footer-note{font-size:.82rem;color:var(--sage);font-weight:600;margin:5px 0 0}
+.top-btn{width:44px;height:44px;display:grid;place-items:center;background:var(--yellow);color:var(--black);border:var(--line);box-shadow:var(--shadow);text-decoration:none;font-size:1.2rem;font-weight:900;transition:transform .2s}
+.top-btn:hover{transform:translate(3px,3px)}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s var(--spring)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal[data-delay="1"]{transition-delay:.1s}.reveal[data-delay="2"]{transition-delay:.2s}
+.toast{position:fixed;z-index:40;left:50%;bottom:24px;transform:translate(-50%,20px);padding:11px 16px;background:var(--charcoal);color:var(--white);border:2px solid var(--yellow);font-size:.85rem;font-weight:800;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.easter-note{position:fixed;z-index:35;inset:auto 18px 18px auto;max-width:min(330px,calc(100vw - 36px));padding:18px;background:var(--yellow);border:var(--line);box-shadow:var(--shadow-lg);font-weight:700;display:none}
+.easter-note.show{display:block;animation:rise .35s var(--spring)}
+.easter-note button{float:right;border:var(--line);background:var(--white);font-weight:900;width:28px;height:28px;cursor:pointer}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes word-in{to{opacity:1;transform:translateY(0) rotate(0)}}
+@keyframes orbit{to{transform:rotate(378deg)}}
+@keyframes bob{50%{translate:0 -10px}}
+@keyframes nudge{50%{transform:translateY(5px)}}
+@keyframes marquee{to{transform:translateX(-50%)}}
+@keyframes wave{to{height:95%}}
+@media(max-width:800px){
+ .hero-grid{grid-template-columns:1fr;gap:48px}.hero-art{min-height:390px}.hero h1{font-size:clamp(3.4rem,12vw,6rem)}
+ .quote-grid,.feature-grid,.team-grid{grid-template-columns:1fr 1fr}
+ .quote:nth-child(2){transform:none}.quote:nth-child(2):hover{transform:translate(-4px,-4px) rotate(1deg)}
+ .player-shell{grid-template-columns:1fr}.chapters{display:grid;grid-template-columns:repeat(3,1fr);min-width:0}
+ .chapter{align-items:flex-start;flex-direction:column}
+ .section-head{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:600px){
+  .hero:before,.hero:after{display:none!important}
+  .hero-grid{gap:30px}
+  .hero h1{font-size:clamp(2.65rem,11.5vw,4.2rem);overflow-wrap:anywhere}
+  .hero-art{margin-top:6px}
+
+ .site-header{height:68px;padding:0 18px}.site-header.scrolled{height:62px}
+ .menu-toggle{display:block}
+ nav{position:fixed;inset:68px 0 auto;display:flex;flex-direction:column;align-items:stretch;gap:0;padding:10px 22px 20px;background:var(--yellow);border-bottom:var(--line);transform:translateY(-140%);opacity:0;pointer-events:none;transition:transform .3s var(--spring),opacity .2s}
+ nav.open{transform:translateY(0);opacity:1;pointer-events:auto}
+ nav a{padding:13px 4px;border-bottom:1px solid #00000035}
+ .wrap{width:calc(100% - 36px)}
+ .hero{padding:65px 0 82px}.hero-art{min-height:350px}.book-cover,.book-shadow{height:310px;width:235px}
+ .art-tag.one{left:-4px}.art-tag.two{right:-4px}
+ .scroll-cue{bottom:18px}
+ section{padding:62px 0}
+ .quote-grid,.feature-grid,.team-grid{grid-template-columns:1fr}
+ .quote{min-height:170px}
+ .player-shell{padding:18px}.chapters{grid-template-columns:1fr}
+ .chapter{flex-direction:row;align-items:center}
+ .rating-panel{grid-template-columns:1fr;gap:18px}
+ .steps{grid-template-columns:1fr;gap:28px}.steps:before{left:34px;right:auto;top:35px;bottom:35px;width:2px;height:auto}
+ .step{display:grid;grid-template-columns:70px 1fr;column-gap:18px;align-items:start}
+ .step-number{grid-row:span 2;margin:0}.step h3{padding-top:5px}
+ .footer-inner{align-items:flex-start}
+ .section-note{max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+ .reveal{opacity:1;transform:none}
+}
+
+/* CINEMATIC MOTION SYSTEM */
+.intro-overlay{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#20272b;color:#e8dfd2;overflow:hidden}
+.intro-grain{position:absolute;inset:-50%;opacity:.12;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");animation:grain-shift .22s steps(2) infinite}
+.intro-inner{position:relative;width:min(680px,calc(100% - 44px));text-align:center}
+.intro-mark{font-size:clamp(2.5rem,7vw,5rem);line-height:1;margin-bottom:22px;opacity:0}
+.intro-kicker,.intro-sub{font-size:.68rem;font-weight:900;letter-spacing:.24em;text-transform:uppercase;opacity:0}
+.intro-title{font:900 clamp(2.8rem,10vw,7rem)/.92 "Archivo",sans-serif;letter-spacing:-.085em;margin:20px 0;white-space:nowrap;opacity:0}
+.intro-rule{height:2px;background:#e8dfd244;overflow:hidden;margin:0 auto 17px;width:min(360px,80%)}
+.intro-rule span{display:block;height:100%;width:100%;background:#e8dfd2;transform:scaleX(0);transform-origin:left}
+.intro-overlay.is-leaving{pointer-events:none}
+.motion-cursor{position:fixed;z-index:999;left:0;top:0;width:18px;height:18px;border:1px solid #e8dfd2;border-radius:50%;background:#20272b;pointer-events:none;opacity:0;transform:translate(-50%,-50%);display:grid;place-items:center;mix-blend-mode:difference}
+.motion-cursor span{width:4px;height:4px;border-radius:50%;background:#fff}
+.motion-cursor b{position:absolute;font:800 9px "DM Sans",sans-serif;letter-spacing:.12em;opacity:0;white-space:nowrap}
+.motion-cursor.is-open{width:58px;height:58px}
+.motion-cursor.is-open b{opacity:1}
+.motion-cursor.is-open span{opacity:0}
+.hero-art,.book-cover{will-change:transform}
+.btn,.top-btn,.play-button,.chapter{will-change:transform}
+.reveal{will-change:transform,opacity}
+.ambient-dust{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.ambient-dust i{position:absolute;width:3px;height:3px;border-radius:50%;background:#20272b;opacity:.13;animation:dust-drift var(--dur,18s) linear infinite;animation-delay:var(--delay,0s)}
+@keyframes grain-shift{0%{transform:translate(0,0)}25%{transform:translate(2%,-1%)}50%{transform:translate(-1%,2%)}75%{transform:translate(1%,1%)}100%{transform:translate(0,0)}}
+@keyframes dust-drift{0%{transform:translate3d(0,105vh,0)}100%{transform:translate3d(24px,-10vh,0)}}
+@media(max-width:800px),(pointer:coarse){.motion-cursor{display:none!important}}
+@media(prefers-reduced-motion:reduce){.intro-overlay{display:none!important}.intro-grain,.ambient-dust i{animation:none!important}.motion-cursor{display:none!important}html{scroll-behavior:auto}}
+
+
+/* LONG-FORM LITERARY ANALYSIS */
+.analysis-intro{max-width:780px;margin:34px 0 22px;padding:20px 22px;border:2px solid #20272b;background:#fff;box-shadow:5px 5px 0 #20272b}
+.analysis-intro p{margin:8px 0 0}
+.analysis-tag{font-size:.68rem;font-weight:900;letter-spacing:.16em}
+.analysis-index{border-top:2px solid #20272b;border-bottom:2px solid #20272b;padding:18px 0;margin:30px 0 8px}
+.analysis-index-links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:12px}
+.analysis-index-links a{color:inherit;font-size:.88rem;font-weight:800;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:3px}
+.analysis-index-links a:hover{opacity:.58}
+.analysis-chapter{padding:clamp(68px,9vw,112px) 0;border-bottom:2px solid #20272b}
+.analysis-layout{display:grid;grid-template-columns:100px minmax(0,1fr);gap:clamp(24px,6vw,82px)}
+.analysis-number{font:900 clamp(3.5rem,8vw,7rem)/.9 "Archivo",sans-serif;letter-spacing:-.09em;color:#aebdc0;position:sticky;top:110px;height:max-content}
+.analysis-body{max-width:820px}
+.analysis-body .sec-title{font-size:clamp(2.8rem,6.8vw,5.8rem);margin:18px 0 22px}
+.analysis-lead{font:700 clamp(1.2rem,2.2vw,1.65rem)/1.45 "DM Sans",sans-serif;max-width:760px;margin-bottom:30px}
+.prose{max-width:760px;font-size:1.04rem;line-height:1.9}
+.prose p{margin:0 0 20px}
+.prose strong{font-weight:900}
+.prose em{font-family:Georgia,serif}
+.analysis-pullquote{max-width:740px;margin:34px 0 0;padding:22px 26px;border-left:5px solid #aebdc0;background:#ffffff12;font:800 clamp(1.2rem,2.4vw,1.8rem)/1.5 "Archivo",sans-serif;letter-spacing:-.025em}
+.analysis-two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:30px;max-width:760px}
+.analysis-note{padding:20px;border:2px solid currentColor;box-shadow:5px 5px 0 #20272b}
+.dark .analysis-note{box-shadow:5px 5px 0 #aebdc0}
+.analysis-note b{display:block;font:900 1.05rem "Archivo",sans-serif;margin-bottom:9px}
+.analysis-note p{margin:0;line-height:1.7}
+.analysis-callout{max-width:760px;margin-top:34px;padding:26px;background:#aebdc0;color:#20272b;border:2px solid #000;box-shadow:7px 7px 0 #000}
+.analysis-callout h3{font-size:clamp(1.5rem,3vw,2.3rem);margin:12px 0}
+.analysis-callout p{margin:0}
+.closing-prose{max-width:850px;margin:38px auto 0;font-size:clamp(1.05rem,1.7vw,1.2rem);line-height:1.95}
+.closing-prose p{margin:0 0 22px}
+.closing-thanks{padding-top:18px;border-top:1px solid #ffffff55;font-weight:800}
+@media(max-width:700px){
+ .analysis-layout{grid-template-columns:1fr;gap:14px}
+ .analysis-number{position:static;font-size:3.1rem}
+ .analysis-body .sec-title{font-size:clamp(2.7rem,12vw,4.3rem)}
+ .prose{font-size:1rem;line-height:1.82}
+ .analysis-two-col{grid-template-columns:1fr}
+ .analysis-index-links{gap:10px 16px}
+ .analysis-index-links a{font-size:.82rem}
+ .analysis-intro{padding:16px}
+}
+
+</style>
+</head>
+<body id="top">
+<!--
+=====================================================================
+  TEMPLATE TRANG WEB (đã xoá sạch nội dung cũ)
+  HƯỚNG DẪN CHO NGƯỜI LÀM TIẾP:
+  - Mọi chỗ trong [ngoặc vuông] là PLACEHOLDER → thay bằng nội dung thật.
+  - Mọi comment bắt đầu bằng "THAY:" nói rõ chỗ đó cần điền gì.
+  - KHÔNG đổi các id="..." (menu, mục lục, JS đang dùng).
+  - Giữ nguyên class="reveal", "word", "kicker"... (đó là hiệu ứng/kiểu dáng).
+  - Phần <style> và <script> không cần sửa. Chỉ sửa trong <body>.
+  - Muốn có audio: xem comment ở khối "Trình phát".
+=====================================================================
+-->
+<div class="progress" id="progress"></div>
+
+<!-- THAY: màn hình mở đầu (chạy vài giây rồi tự biến mất) -->
+<div class="intro-overlay" id="introOverlay" aria-hidden="true">
+  <div class="intro-grain"></div>
+  <div class="intro-inner">
+    <div class="intro-mark">✳</div>
+    <div class="intro-kicker">[TÊN NHÓM / THƯƠNG HIỆU] PRESENTS</div>
+    <div class="intro-title">[TÊN TÁC PHẨM]</div>
+    <div class="intro-rule"><span></span></div>
+    <div class="intro-sub">[SLOGAN / CÂU NGẮN]</div>
+  </div>
+</div>
+<div class="motion-cursor" id="motionCursor" aria-hidden="true"><span></span><b>OPEN</b></div>
+
+<header class="site-header" id="header">
+  <!-- THAY: tên thương hiệu ở góc trái (chữ trong aria-label cũng đổi theo) -->
+  <a class="logo" href="#top" id="secretLogo" aria-label="[Tên thương hiệu], về đầu trang"><span class="logo-mark">✳</span><span>[TÊN THƯƠNG HIỆU]</span></a>
+  <!-- THAY: tên các mục menu. href phải khớp id của mục tương ứng bên dưới -->
+  <nav id="mainNav" aria-label="Điều hướng chính">
+    <a href="#podcast">[Menu 1]</a><a href="#analysis-guide">[Menu 2]</a><a href="#meaning-title">[Menu 3]</a><a href="#artistry">[Menu 4]</a><a href="#team">[Menu 5]</a>
+  </nav>
+  <button class="menu-toggle" id="menuToggle" aria-label="Mở menu" aria-expanded="false">☰</button>
+</header>
+
+<main>
+<!-- ===================== HERO (đầu trang) ===================== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <!-- THAY: nhãn nhỏ phía trên tiêu đề lớn -->
+      <span class="eyebrow"><span class="eyebrow-dot"></span> [CHUYÊN MỤC] · [TÊN NHÓM]</span>
+      <!-- THAY: tiêu đề lớn. Giữ đúng 5 thẻ <span class="word"> (có hiệu ứng chữ bay vào); <br> để xuống dòng.
+           Từ có class "stroke" sẽ là chữ rỗng viền đen. -->
+      <h1><span class="word">[Tiêu</span> <span class="word stroke">đề]</span><br><span class="word">[phụ</span> <span class="word">đề</span> <span class="word">ở đây]</span></h1>
+      <!-- THAY: mô tả 1–2 câu về nội dung trang web -->
+      <p class="hero-copy">[Mô tả ngắn 1–2 câu giới thiệu nội dung của trang web.]</p>
+      <!-- THAY: chữ trên 2 nút. href trỏ tới id mục tương ứng -->
+      <div class="hero-actions"><a class="btn" href="#podcast">▶ [Nút chính] <span>↗</span></a><a class="btn light" href="#analysis-guide">[Nút phụ] ↓</a></div>
+    </div>
+    <!-- THAY: minh hoạ bìa sách / hình đại diện -->
+    <div class="hero-art" id="heroArt" aria-label="[Mô tả hình minh hoạ]">
+      <span class="art-tag one">[TÁC GIẢ]</span>
+      <div class="book-shadow"></div>
+      <div class="book-cover" id="bookCover">
+        <div class="book-top"><span>[TÊN NHÓM]</span><span>[CHUYÊN MỤC]</span></div>
+        <div class="book-title">[TÊN<br>TÁC PHẨM.]</div>
+        <div class="book-symbol">✳</div>
+        <div class="book-bottom">[TÊN TIẾNG VIỆT] · [NĂM]</div>
+      </div>
+      <span class="art-tag two">[TỪ KHOÁ ↗]</span>
+    </div>
+  </div>
+  <div class="scroll-cue">[Chữ gợi ý cuộn trang]</div>
+</section>
+
+<!-- THAY: dải chữ chạy ngang (marquee). Sửa các [TỪ KHOÁ]; giữ <b>✳</b> làm dấu phân cách. Có thể rút ngắn danh sách. -->
+<div class="marquee" aria-label="[Mô tả dải chữ]">
+  <div class="marquee-track"><span>[TỪ KHOÁ 1] <b>✳</b></span><span>[TỪ KHOÁ 2] <b>✳</b></span><span>[TỪ KHOÁ 3] <b>✳</b></span><span>[TỪ KHOÁ 4] <b>✳</b></span><span>[TỪ KHOÁ 1] <b>✳</b></span><span>[TỪ KHOÁ 2] <b>✳</b></span><span>[TỪ KHOÁ 3] <b>✳</b></span><span>[TỪ KHOÁ 4] <b>✳</b></span><span>[TỪ KHOÁ 1] <b>✳</b></span><span>[TỪ KHOÁ 2] <b>✳</b></span><span>[TỪ KHOÁ 3] <b>✳</b></span><span>[TỪ KHOÁ 4] <b>✳</b></span><span>[TỪ KHOÁ 1] <b>✳</b></span><span>[TỪ KHOÁ 2] <b>✳</b></span><span>[TỪ KHOÁ 3] <b>✳</b></span><span>[TỪ KHOÁ 4] <b>✳</b></span></div>
+</div>
+
+<!-- ===================== MỤC 01: PODCAST / AUDIO ===================== -->
+<section id="podcast">
+ <div class="wrap">
+  <div class="section-head reveal"><div><span class="kicker">01 / [Tên mục]</span><h2 class="sec-title">[Tiêu đề dòng 1.]<br>[Tiêu đề dòng 2.]</h2></div><p class="section-note">[Ghi chú ngắn bên phải tiêu đề: giới thiệu audio / nội dung mục này.]</p></div>
+  <div class="player-shell reveal" id="playerShell">
+    <div>
+      <div class="player-meta"><div class="player-icon">♫</div><div><strong>[Tên bản audio]</strong><small id="audioLabel">[Nhóm] · [Tác giả] · Chưa có audio</small></div></div>
+      <div class="wave" id="wave" aria-hidden="true"></div>
+      <!-- THAY: để có audio, sửa thành <audio id="audio" preload="metadata" src="duong-dan/file.mp3"></audio>
+           Khi có src, nút phát + thanh tua + các chương bên dưới tự được bật. Chưa có thì để nguyên. -->
+      <audio id="audio" preload="metadata"></audio>
+      <div class="player-controls">
+        <button class="play-button" id="playButton" aria-label="Phát podcast" disabled>▶</button>
+        <div class="timeline"><span id="currentTime">00:00</span><input id="seek" type="range" min="0" max="100" value="0" aria-label="Tua podcast" disabled><span id="duration">00:00</span></div>
+      </div>
+      <p class="player-status" id="playerStatus">[Dòng trạng thái khi chưa có audio, vd: "Bản thu sẽ xuất hiện tại đây."]</p>
+    </div>
+    <!-- THAY: các chương audio. data-time = giây bắt đầu chương; chữ bên phải là mốc giờ tương ứng (mm:ss). -->
+    <div class="chapters" aria-label="Các chương audio">
+      <button class="chapter" data-time="0" disabled><span>01 · [Tên chương 1]</span><span>00:00 ↗</span></button>
+      <button class="chapter" data-time="90" disabled><span>02 · [Tên chương 2]</span><span>01:30 ↗</span></button>
+      <button class="chapter" data-time="200" disabled><span>03 · [Tên chương 3]</span><span>03:20 ↗</span></button>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- ===================== MỤC 02: GIỚI THIỆU PHẦN PHÂN TÍCH + MỤC LỤC ===================== -->
+<section class="feature-section" id="analysis-guide">
+ <div class="wrap">
+  <div class="section-head reveal">
+   <div><span class="kicker">02 / [Tên mục]</span><h2 class="sec-title">[Tiêu đề dòng 1]<br>[Tiêu đề dòng 2.]</h2></div>
+   <p class="section-note">[Ghi chú dẫn vào phần phân tích bên dưới.]</p>
+  </div>
+  <div class="analysis-intro reveal">
+   <span class="analysis-tag">[NHÃN LƯU Ý]</span>
+   <!-- THAY: lưu ý cho người đọc (vd: cảnh báo spoiler, phạm vi nội dung...). Xoá cả khối nếu không cần. -->
+   <p><strong>[Lưu ý:]</strong> [Nội dung lưu ý dành cho người đọc.]</p>
+  </div>
+  <div class="analysis-index reveal">
+   <span class="kicker">[TIÊU ĐỀ MỤC LỤC]</span>
+   <!-- THAY: mục lục. Mỗi link trỏ tới id của 1 mục ở dưới (đã khớp sẵn, chỉ đổi chữ). -->
+   <div class="analysis-index-links">
+    <a href="#meaning-title">01. [Mục 1]</a>
+    <a href="#meursault">02. [Mục 2]</a>
+    <a href="#sun-symbol">03. [Mục 3]</a>
+    <a href="#trial">04. [Mục 4]</a>
+    <a href="#absurd">05. [Mục 5]</a>
+    <a href="#ending">06. [Mục 6]</a>
+    <a href="#artistry">07. [Mục 7]</a>
+    <a href="#evaluation">08. [Mục 8]</a>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ===================== 8 MỤC PHÂN TÍCH (nền sáng/tối xen kẽ: class "dark" = nền tối) =====================
+     Mỗi mục cùng khung: nhãn → tiêu đề → câu dẫn → đoạn văn → khối phụ (trích dẫn / 2 ô / khung nhấn).
+     Id của từng mục đã khớp với menu và mục lục ở trên, nên chỉ cần thay chữ. -->
+
+<section class="dark analysis-chapter" id="meaning-title">
+ <!-- ===== MỤC 01 (id="meaning-title") =====
+      Không đổi id="meaning-title" vì menu + mục lục đang trỏ vào đây. Muốn thêm/xoá mục thì copy/xoá cả khối <section> này. -->
+ <div class="wrap analysis-layout">
+  <div class="analysis-number reveal">01</div>
+  <div class="analysis-body">
+   <!-- THAY: nhãn nhỏ phía trên tiêu đề (viết HOA, ngắn, dạng "CHỦ ĐỀ · KHÍA CẠNH") -->
+   <span class="kicker reveal">[NHÃN MỤC 01]</span>
+   <!-- THAY: tiêu đề mục. Dùng <br> để xuống dòng cho đẹp (khoảng 2 dòng ngắn) -->
+   <h2 class="sec-title reveal">[Tiêu đề mục 01]<br>[dòng 2 của tiêu đề]</h2>
+   <!-- THAY: 1 câu dẫn nổi bật, tóm ý chính của mục -->
+   <p class="analysis-lead reveal">[Câu dẫn nhập: tóm tắt ý chính của mục 01 trong 1–2 câu.]</p>
+   <div class="prose reveal">
+    <!-- THAY: nội dung chính. Mỗi đoạn một thẻ <p>; copy thêm hoặc xoá bớt tuỳ độ dài. -->
+    <p>[Đoạn 1: nêu luận điểm / ý chính của mục.]</p>
+    <p>[Đoạn 2: phân tích, dẫn chứng, ví dụ cụ thể.]</p>
+    <p>[Đoạn 3: mở rộng, so sánh hoặc nhìn từ góc độ khác.]</p>
+    <!-- Có thể dùng <strong>nhấn mạnh</strong> hoặc <em>in nghiêng</em> trong đoạn văn. -->
+   </div>
+   <!-- THAY: câu trích / nhận định nổi bật (1–2 câu). Xoá cả thẻ nếu không cần. -->
+   <blockquote class="analysis-pullquote">[Câu trích hoặc nhận định nổi bật của mục.]</blockquote>
+  </div>
+ </div>
+</section>
+
+<section class="analysis-chapter" id="meursault">
+ <!-- ===== MỤC 02 (id="meursault") =====
+      Không đổi id="meursault" vì menu + mục lục đang trỏ vào đây. Muốn thêm/xoá mục thì copy/xoá cả khối <section> này. -->
+ <div class="wrap analysis-layout">
+  <div class="analysis-number reveal">02</div>
+  <div class="analysis-body">
+   <!-- THAY: nhãn nhỏ phía trên tiêu đề (viết HOA, ngắn, dạng "CHỦ ĐỀ · KHÍA CẠNH") -->
+   <span class="kicker reveal">[NHÃN MỤC 02]</span>
+   <!-- THAY: tiêu đề mục. Dùng <br> để xuống dòng cho đẹp (khoảng 2 dòng ngắn) -->
+   <h2 class="sec-title reveal">[Tiêu đề mục 02]<br>[dòng 2 của tiêu đề]</h2>
+   <!-- THAY: 1 câu dẫn nổi bật, tóm ý chính của mục -->
+   <p class="analysis-lead reveal">[Câu dẫn nhập: tóm tắt ý chính của mục 02 trong 1–2 câu.]</p>
+   <div class="prose reveal">
+    <!-- THAY: nội dung chính. Mỗi đoạn một thẻ <p>; copy thêm hoặc xoá bớt tuỳ độ dài. -->
+    <p>[Đoạn 1: nêu luận điểm / ý chính của mục.]</p>
+    <p>[Đoạn 2: phân tích, dẫn chứng, ví dụ cụ thể.]</p>
+    <p>[Đoạn 3: mở rộng, so sánh hoặc nhìn từ góc độ khác.]</p>
+    <!-- Có thể dùng <strong>nhấn mạnh</strong> hoặc <em>in nghiêng</em> trong đoạn văn. -->
+   </div>
+   <!-- THAY: 2 ô ghi chú đối chiếu cạnh nhau (vd: A vs B). Mỗi ô gồm tiêu đề <b> + 1 câu <p>. -->
+   <div class="analysis-two-col">
+    <article class="analysis-note"><b>[Tiêu đề ô 1]</b><p>[Giải thích ngắn cho ô 1.]</p></article>
+    <article class="analysis-note"><b>[Tiêu đề ô 2]</b><p>[Giải thích ngắn cho ô 2.]</p></article>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="dark analysis-chapter" id="sun-symbol">
+ <!-- ===== MỤC 03 (id="sun-symbol") =====
+      Không đổi id="sun-symbol" vì menu + mục lục đang trỏ vào đây. Muốn thêm/xoá mục thì copy/xoá cả khối <section> này. -->
+ <div class="wrap analysis-layout">
+  <div class="analysis-number reveal">03</div>
+  <div class="analysis-body">
+   <!-- THAY: nhãn nhỏ phía trên tiêu đề (viết HOA, ngắn, dạng "CHỦ ĐỀ · KHÍA CẠNH") -->
+   <span class="kicker reveal">[NHÃN MỤC 03]</span>
+   <!-- THAY: tiêu đề mục. Dùng <br> để xuống dòng cho đẹp (khoảng 2 dòng ngắn) -->
+   <h2 class="sec-title reveal">[Tiêu đề mục 03]<br>[dòng 2 của tiêu đề]</h2>
+   <!-- THAY: 1 câu dẫn nổi bật, tóm ý chính của mục -->
+   <p class="analysis-lead reveal">[Câu dẫn nhập: tóm tắt ý chính của mục 03 trong 1–2 câu.]</p>
+   <div class="prose reveal">
+    <!-- THAY: nội dung chính. Mỗi đoạn một thẻ <p>; copy thêm hoặc xoá bớt tuỳ độ dài. -->
+    <p>[Đoạn 1: nêu luận điểm / ý chính của mục.]</p>
+    <p>[Đoạn 2: phân tích, dẫn chứng, ví dụ cụ thể.]</p>
+    <p>[Đoạn 3: mở rộng, so sánh hoặc nhìn từ góc độ khác.]</p>
+    <!-- Có thể dùng <strong>nhấn mạnh</strong> hoặc <em>in nghiêng</em> trong đoạn văn. -->
+   </div>
+   <!-- THAY: câu trích / nhận định nổi bật (1–2 câu). Xoá cả thẻ nếu không cần. -->
+   <blockquote class="analysis-pullquote">[Câu trích hoặc nhận định nổi bật của mục.]</blockquote>
+  </div>
+ </div>
+</section>
+
+<section class="analysis-chapter" id="trial">
+ <!-- ===== MỤC 04 (id="trial") =====
+      Không đổi id="trial" vì menu + mục lục đang trỏ vào đây. Muốn thêm/xoá mục thì copy/xoá cả khối <section> này. -->
+ <div class="wrap analysis-layout">
+  <div class="analysis-number reveal">04</div>
+  <div class="analysis-body">
+   <!-- THAY: nhãn nhỏ phía trên tiêu đề (viết HOA, ngắn, dạng "CHỦ ĐỀ · KHÍA CẠNH") -->
+   <span class="kicker reveal">[NHÃN MỤC 04]</span>
+   <!-- THAY: tiêu đề mục. Dùng <br> để xuống dòng cho đẹp (khoảng 2 dòng ngắn) -->
+   <h2 class="sec-title reveal">[Tiêu đề mục 04]<br>[dòng 2 của tiêu đề]</h2>
+   <!-- THAY: 1 câu dẫn nổi bật, tóm ý chính của mục -->
+   <p class="analysis-lead reveal">[Câu dẫn nhập: tóm tắt ý chính của mục 04 trong 1–2 câu.]</p>
+   <div class="prose reveal">
+    <!-- THAY: nội dung chính. Mỗi đoạn một thẻ <p>; copy thêm hoặc xoá bớt tuỳ độ dài. -->
+    <p>[Đoạn 1: nêu luận điểm / ý chính của mục.]</p>
+    <p>[Đoạn 2: phân tích, dẫn chứng, ví dụ cụ thể.]</p>
+    <p>[Đoạn 3: mở rộng, so sánh hoặc nhìn từ góc độ khác.]</p>
+    <!-- Có thể dùng <strong>nhấn mạnh</strong> hoặc <em>in nghiêng</em> trong đoạn văn. -->
+   </div>
+   <!-- THAY: 2 ô ghi chú đối chiếu cạnh nhau (vd: A vs B). Mỗi ô gồm tiêu đề <b> + 1 câu <p>. -->
+   <div class="analysis-two-col">
+    <article class="analysis-note"><b>[Tiêu đề ô 1]</b><p>[Giải thích ngắn cho ô 1.]</p></article>
+    <article class="analysis-note"><b>[Tiêu đề ô 2]</b><p>[Giải thích ngắn cho ô 2.]</p></article>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="dark analysis-chapter" id="absurd">
+ <!-- ===== MỤC 05 (id="absurd") =====
+      Không đổi id="absurd" vì menu + mục lục đang trỏ vào đây. Muốn thêm/xoá mục thì copy/xoá cả khối <section> này. -->
+ <div class="wrap analysis-layout">
+  <div class="analysis-number reveal">05</div>
+  <div class="analysis-body">
+   <!-- THAY: nhãn nhỏ phía trên tiêu đề (viết HOA, ngắn, dạng "CHỦ ĐỀ · KHÍA CẠNH") -->
+   <span class="kicker reveal">[NHÃN MỤC 05]</span>
+   <!-- THAY: tiêu đề mục. Dùng <br> để xuống dòng cho đẹp (khoảng 2 dòng ngắn) -->
+   <h2 class="sec-title reveal">[Tiêu đề mục 05]<br>[dòng 2 của tiêu đề]</h2>
+   <!-- THAY: 1 câu dẫn nổi bật, tóm ý chính của mục -->
+   <p class="analysis-lead reveal">[Câu dẫn nhập: tóm tắt ý chính của mục 05 trong 1–2 câu.]</p>
+   <div class="prose reveal">
+    <!-- THAY: nội dung chính. Mỗi đoạn một thẻ <p>; copy thêm hoặc xoá bớt tuỳ độ dài. -->
+    <p>[Đoạn 1: nêu luận điểm / ý chính của mục.]</p>
+    <p>[Đoạn 2: phân tích, dẫn chứng, ví dụ cụ thể.]</p>
+    <p>[Đoạn 3: mở rộng, so sánh hoặc nhìn từ góc độ khác.]</p>
+    <!-- Có thể dùng <strong>nhấn mạnh</strong> hoặc <em>in nghiêng</em> trong đoạn văn. -->
+   </div>
+   <!-- THAY: khung nhấn mạnh ý then chốt. Phần <em> trong <h3> sẽ được tô nổi. -->
+   <div class="analysis-callout reveal"><span class="kicker">[NHÃN KHUNG]</span><h3>[Câu then chốt] <em>[từ khoá nhấn mạnh]</em> [phần còn lại của câu].</h3><p>[Một câu giải thích thêm.]</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="analysis-chapter" id="ending">
+ <!-- ===== MỤC 06 (id="ending") =====
+      Không đổi id="ending" vì menu + mục lục đang trỏ vào đây. Muốn thêm/xoá mục thì copy/xoá cả khối <section> này. -->
+ <div class="wrap analysis-layout">
+  <div class="analysis-number reveal">06</div>
+  <div class="analysis-body">
+   <!-- THAY: nhãn nhỏ phía trên tiêu đề (viết HOA, ngắn, dạng "CHỦ ĐỀ · KHÍA CẠNH") -->
+   <span class="kicker reveal">[NHÃN MỤC 06]</span>
+   <!-- THAY: tiêu đề mục. Dùng <br> để xuống dòng cho đẹp (khoảng 2 dòng ngắn) -->
+   <h2 class="sec-title reveal">[Tiêu đề mục 06]<br>[dòng 2 của tiêu đề]</h2>
+   <!-- THAY: 1 câu dẫn nổi bật, tóm ý chính của mục -->
+   <p class="analysis-lead reveal">[Câu dẫn nhập: tóm tắt ý chính của mục 06 trong 1–2 câu.]</p>
+   <div class="prose reveal">
+    <!-- THAY: nội dung chính. Mỗi đoạn một thẻ <p>; copy thêm hoặc xoá bớt tuỳ độ dài. -->
+    <p>[Đoạn 1: nêu luận điểm / ý chính của mục.]</p>
+    <p>[Đoạn 2: phân tích, dẫn chứng, ví dụ cụ thể.]</p>
+    <p>[Đoạn 3: mở rộng, so sánh hoặc nhìn từ góc độ khác.]</p>
+    <!-- Có thể dùng <strong>nhấn mạnh</strong> hoặc <em>in nghiêng</em> trong đoạn văn. -->
+   </div>
+   <!-- THAY: câu trích / nhận định nổi bật (1–2 câu). Xoá cả thẻ nếu không cần. -->
+   <blockquote class="analysis-pullquote">[Câu trích hoặc nhận định nổi bật của mục.]</blockquote>
+  </div>
+ </div>
+</section>
+
+<section class="dark analysis-chapter" id="artistry">
+ <!-- ===== MỤC 07 (id="artistry") =====
+      Không đổi id="artistry" vì menu + mục lục đang trỏ vào đây. Muốn thêm/xoá mục thì copy/xoá cả khối <section> này. -->
+ <div class="wrap analysis-layout">
+  <div class="analysis-number reveal">07</div>
+  <div class="analysis-body">
+   <!-- THAY: nhãn nhỏ phía trên tiêu đề (viết HOA, ngắn, dạng "CHỦ ĐỀ · KHÍA CẠNH") -->
+   <span class="kicker reveal">[NHÃN MỤC 07]</span>
+   <!-- THAY: tiêu đề mục. Dùng <br> để xuống dòng cho đẹp (khoảng 2 dòng ngắn) -->
+   <h2 class="sec-title reveal">[Tiêu đề mục 07]<br>[dòng 2 của tiêu đề]</h2>
+   <!-- THAY: 1 câu dẫn nổi bật, tóm ý chính của mục -->
+   <p class="analysis-lead reveal">[Câu dẫn nhập: tóm tắt ý chính của mục 07 trong 1–2 câu.]</p>
+   <div class="prose reveal">
+    <!-- THAY: nội dung chính. Mỗi đoạn một thẻ <p>; copy thêm hoặc xoá bớt tuỳ độ dài. -->
+    <p>[Đoạn 1: nêu luận điểm / ý chính của mục.]</p>
+    <p>[Đoạn 2: phân tích, dẫn chứng, ví dụ cụ thể.]</p>
+    <p>[Đoạn 3: mở rộng, so sánh hoặc nhìn từ góc độ khác.]</p>
+    <!-- Có thể dùng <strong>nhấn mạnh</strong> hoặc <em>in nghiêng</em> trong đoạn văn. -->
+   </div>
+   <!-- THAY: 2 ô ghi chú đối chiếu cạnh nhau (vd: A vs B). Mỗi ô gồm tiêu đề <b> + 1 câu <p>. -->
+   <div class="analysis-two-col">
+    <article class="analysis-note"><b>[Tiêu đề ô 1]</b><p>[Giải thích ngắn cho ô 1.]</p></article>
+    <article class="analysis-note"><b>[Tiêu đề ô 2]</b><p>[Giải thích ngắn cho ô 2.]</p></article>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="analysis-chapter" id="evaluation">
+ <!-- ===== MỤC 08 (id="evaluation") =====
+      Không đổi id="evaluation" vì menu + mục lục đang trỏ vào đây. Muốn thêm/xoá mục thì copy/xoá cả khối <section> này. -->
+ <div class="wrap analysis-layout">
+  <div class="analysis-number reveal">08</div>
+  <div class="analysis-body">
+   <!-- THAY: nhãn nhỏ phía trên tiêu đề (viết HOA, ngắn, dạng "CHỦ ĐỀ · KHÍA CẠNH") -->
+   <span class="kicker reveal">[NHÃN MỤC 08]</span>
+   <!-- THAY: tiêu đề mục. Dùng <br> để xuống dòng cho đẹp (khoảng 2 dòng ngắn) -->
+   <h2 class="sec-title reveal">[Tiêu đề mục 08]<br>[dòng 2 của tiêu đề]</h2>
+   <!-- THAY: 1 câu dẫn nổi bật, tóm ý chính của mục -->
+   <p class="analysis-lead reveal">[Câu dẫn nhập: tóm tắt ý chính của mục 08 trong 1–2 câu.]</p>
+   <div class="prose reveal">
+    <!-- THAY: nội dung chính. Mỗi đoạn một thẻ <p>; copy thêm hoặc xoá bớt tuỳ độ dài. -->
+    <p>[Đoạn 1: nêu luận điểm / ý chính của mục.]</p>
+    <p>[Đoạn 2: phân tích, dẫn chứng, ví dụ cụ thể.]</p>
+    <p>[Đoạn 3: mở rộng, so sánh hoặc nhìn từ góc độ khác.]</p>
+    <!-- Có thể dùng <strong>nhấn mạnh</strong> hoặc <em>in nghiêng</em> trong đoạn văn. -->
+   </div>
+   <!-- THAY: khung nhấn mạnh ý then chốt. Phần <em> trong <h3> sẽ được tô nổi. -->
+   <div class="analysis-callout reveal"><span class="kicker">[NHÃN KHUNG]</span><h3>[Câu then chốt] <em>[từ khoá nhấn mạnh]</em> [phần còn lại của câu].</h3><p>[Một câu giải thích thêm.]</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- ===================== LỜI KẾT ===================== -->
+<section class="dark analysis-chapter" id="closing-thought">
+ <div class="wrap">
+  <div class="section-head reveal"><div><span class="kicker">09 / [Lời kết]</span><h2 class="sec-title">[Tiêu đề kết dòng 1.]<br>[Tiêu đề kết dòng 2.]</h2></div><p class="section-note">[Câu ngắn bên phải tiêu đề.]</p></div>
+  <div class="closing-prose reveal">
+   <!-- THAY: các đoạn kết luận (thêm/bớt thẻ <p> tuỳ ý) -->
+   <p>[Đoạn kết 1: tổng kết ý chính.]</p>
+   <p>[Đoạn kết 2: nhận định / suy ngẫm mở rộng.]</p>
+   <p>[Đoạn kết 3: câu chốt, để ngỏ câu hỏi cho người đọc.]</p>
+   <p class="closing-thanks">[Lời cảm ơn người đọc / người nghe.]</p>
+  </div>
+ </div>
+</section>
+
+<!-- ===================== THÀNH VIÊN NHÓM ===================== -->
+<section id="team">
+ <div class="wrap">
+  <div class="section-head reveal"><div><span class="kicker">10 / [Nhãn mục]</span><h2 class="sec-title">[Tiêu đề dòng 1]<br>[Tiêu đề dòng 2.]</h2></div><p class="section-note">[Ghi chú: tên nhóm, dự án mà các thành viên cùng thực hiện.]</p></div>
+  <!-- THAY: mỗi <article> là 1 thẻ thành viên. Copy thêm thẻ nếu nhóm đông hơn 3 người. Số trong .avatar là số thứ tự (hoặc thay bằng chữ cái đầu tên). -->
+  <div class="team-grid">
+    <article class="team-card reveal"><div class="avatar">01</div><h3>[Tên thành viên 1]</h3><p>[Vai trò trong nhóm.]</p></article>
+    <article class="team-card reveal" data-delay="1"><div class="avatar">02</div><h3>[Tên thành viên 2]</h3><p>[Vai trò trong nhóm.]</p></article>
+    <article class="team-card reveal" data-delay="2"><div class="avatar">03</div><h3>[Tên thành viên 3]</h3><p>[Vai trò trong nhóm.]</p></article>
+  </div>
+ </div>
+</section>
+
+<!-- ===================== KÊU GỌI HÀNH ĐỘNG (CTA) cuối trang ===================== -->
+<section class="cta">
+ <!-- THAY: nhãn + câu lớn + 1 câu mô tả + chữ nút (nút cuộn lên mục #podcast) -->
+ <div class="wrap reveal"><span class="kicker">[NHÃN NHỎ]</span><h2>[Câu kêu gọi / thông điệp cuối trang.]</h2><p>[Một câu mô tả ngắn.]</p><a class="btn" href="#podcast">▶ [Chữ trên nút]</a></div>
+</section>
+</main>
+
+<!-- THAY: chân trang -->
+<footer><div class="wrap footer-inner"><div><div class="footer-brand">✳ [TÊN NHÓM / THƯƠNG HIỆU]</div><p class="footer-note">[Chuyên mục] · [Tên tác phẩm] · [Tác giả]</p></div><a class="top-btn" href="#top" aria-label="Về đầu trang">↑</a></div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<!-- THAY: lời nhắn ẩn, hiện khi bấm 3 lần liên tiếp vào logo (easter egg). Xoá cả dòng nếu không muốn. -->
+<div class="easter-note" id="easterNote"><button id="closeEaster" aria-label="Đóng">×</button><strong>[TIÊU ĐỀ TRANG BÍ MẬT] ✳</strong><br>[Lời nhắn bí mật gửi người tò mò.]</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+ const $=(s,root=document)=>root.querySelector(s), $$=(s,root=document)=>[...root.querySelectorAll(s)];
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const toast=$('#toast'); let toastTimer;
+ function notify(message){toast.textContent=message;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),1900)}
+
+ // Scroll progress and compact header
+ const header=$('#header'), progress=$('#progress');
+ function onScroll(){const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?scrollY/max*100:0)+'%';header.classList.toggle('scrolled',scrollY>30)}
+ addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+ // Reveal elements, with a safe fallback
+ const reveals=$$('.reveal');
+ if('IntersectionObserver' in window && !reduced){
+   const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.12,rootMargin:'0px 0px -35px 0px'});
+   reveals.forEach(el=>observer.observe(el));
+ }else reveals.forEach(el=>el.classList.add('visible'));
+
+ // Mobile navigation
+ const nav=$('#mainNav'), menu=$('#menuToggle');
+ function closeMenu(){nav.classList.remove('open');document.body.classList.remove('menu-open');menu.setAttribute('aria-expanded','false');menu.textContent='☰'}
+ menu.addEventListener('click',()=>{const open=!nav.classList.contains('open');nav.classList.toggle('open',open);document.body.classList.toggle('menu-open',open);menu.setAttribute('aria-expanded',String(open));menu.textContent=open?'×':'☰'});
+ $$('a',nav).forEach(a=>a.addEventListener('click',closeMenu));
+ addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+
+ // Active nav section
+ if('IntersectionObserver' in window){
+   const sectionObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){$$('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id))}}),{rootMargin:'-30% 0px -60% 0px'});
+   ['podcast','quotes','features','team'].forEach(id=>{const el=document.getElementById(id);if(el)sectionObserver.observe(el)});
+ }
+
+ // Desktop book tilt
+ const art=$('#heroArt'), cover=$('#bookCover');
+ if(art && cover && matchMedia('(pointer:fine)').matches && !reduced){
+   art.addEventListener('pointermove',e=>{const r=art.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;cover.style.transform=`rotateY(${x*13}deg) rotateX(${-y*11}deg) rotateZ(-3deg)`});
+   art.addEventListener('pointerleave',()=>cover.style.transform='rotateY(0) rotateX(0) rotateZ(-5deg)');
+ }
+
+ // Waveform bars
+ const wave=$('#wave');
+ for(let i=0;i<36;i++){const bar=document.createElement('i');bar.style.setProperty('--h',(18+Math.abs(Math.sin(i*1.7))*72)+'%');bar.style.setProperty('--d',(-i*.045)+'s');wave.appendChild(bar)}
+
+ // Audio player: remains honestly disabled until a real source is supplied
+ const audio=$('#audio'), shell=$('#playerShell'), play=$('#playButton'), seek=$('#seek'), current=$('#currentTime'), duration=$('#duration'), status=$('#playerStatus'), label=$('#audioLabel'), chapters=$$('.chapter');
+ function fmt(t){if(!Number.isFinite(t))return'00:00';return String(Math.floor(t/60)).padStart(2,'0')+':'+String(Math.floor(t%60)).padStart(2,'0')}
+ function hasAudio(){return Boolean(audio.getAttribute('src')||audio.querySelector('source'))}
+ function setupAudio(){
+   if(!hasAudio())return;
+   audio.load();play.disabled=false;seek.disabled=false;chapters.forEach(b=>b.disabled=false);label.textContent='[Nguồn bản thu / tên người thực hiện]';status.textContent='Sẵn sàng phát podcast.';
+ }
+ setupAudio();
+ play.addEventListener('click',async()=>{if(!hasAudio())return;try{if(audio.paused)await audio.play();else audio.pause()}catch(e){status.textContent='Không thể phát file audio. Hãy kiểm tra đường dẫn và định dạng file.'}});
+ audio.addEventListener('play',()=>{play.textContent='Ⅱ';play.setAttribute('aria-label','Tạm dừng podcast');shell.classList.add('playing');status.textContent='Đang phát podcast…'});
+ audio.addEventListener('pause',()=>{play.textContent='▶';play.setAttribute('aria-label','Phát podcast');shell.classList.remove('playing');if(!audio.ended)status.textContent='Đã tạm dừng.'});
+ audio.addEventListener('loadedmetadata',()=>{duration.textContent=fmt(audio.duration);seek.max=audio.duration||100});
+ audio.addEventListener('timeupdate',()=>{current.textContent=fmt(audio.currentTime);if(!seek.matches(':active'))seek.value=audio.currentTime});
+ audio.addEventListener('ended',()=>{status.textContent='Bạn đã nghe hết podcast. Cảm ơn vì đã lắng nghe!'});
+ seek.addEventListener('input',()=>{if(hasAudio())audio.currentTime=Number(seek.value)});
+ chapters.forEach(b=>b.addEventListener('click',()=>{if(hasAudio()){audio.currentTime=Math.min(Number(b.dataset.time),audio.duration||Number(b.dataset.time));audio.play().catch(()=>{})}}));
+
+ // Copy quote text
+ $$('.copy-btn').forEach(btn=>btn.addEventListener('click',async()=>{const quote=btn.closest('.quote').querySelector(':scope > span:nth-child(2)').textContent.trim();try{await navigator.clipboard.writeText(quote);notify('Đã sao chép trích dẫn.')}catch(e){notify('Trình duyệt không cho phép sao chép tự động.')}}));
+
+ // Tiny logo easter egg: three clicks
+ let logoClicks=0, logoTimer;
+ $('#secretLogo').addEventListener('click',e=>{logoClicks++;clearTimeout(logoTimer);if(logoClicks>=3){e.preventDefault();$('#easterNote').classList.add('show');logoClicks=0}else logoTimer=setTimeout(()=>logoClicks=0,850)});
+ $('#closeEaster').addEventListener('click',()=>$('#easterNote').classList.remove('show'));
+})();
+</script>
+
+<script>
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarse = window.matchMedia('(pointer: coarse)').matches;
+  const $ = (s, root=document) => root.querySelector(s);
+  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+
+  // A tiny ambient layer: intentionally restrained and automatically omitted on mobile.
+  if (!coarse && !reduce) {
+    const dust = document.createElement('div');
+    dust.className = 'ambient-dust';
+    dust.setAttribute('aria-hidden','true');
+    for (let i=0;i<12;i++) {
+      const dot=document.createElement('i');
+      dot.style.left=(5+Math.random()*90)+'%';
+      dot.style.setProperty('--dur',(16+Math.random()*18)+'s');
+      dot.style.setProperty('--delay',(-Math.random()*25)+'s');
+      dust.appendChild(dot);
+    }
+    document.body.appendChild(dust);
+  }
+
+  // Premium cursor: follows with a soft lag and never replaces the native pointer.
+  const cursor=$('#motionCursor');
+  if(cursor && !coarse && !reduce){
+    let x=innerWidth/2,y=innerHeight/2,tx=x,ty=y,raf=0;
+    addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;cursor.style.opacity='1';},{passive:true});
+    function follow(){
+      x+=(tx-x)*.18;y+=(ty-y)*.18;
+      cursor.style.left=x+'px';cursor.style.top=y+'px';
+      raf=requestAnimationFrame(follow);
+    }
+    follow();
+    $$('a,button,.book-cover').forEach(el=>{
+      el.addEventListener('pointerenter',()=>cursor.classList.toggle('is-open',el.matches('.book-cover')));
+      el.addEventListener('pointerleave',()=>cursor.classList.remove('is-open'));
+    });
+    addEventListener('blur',()=>{cancelAnimationFrame(raf);cursor.style.opacity='0'});
+    addEventListener('focus',()=>{if(!document.hidden)follow()});
+  }
+
+  // GSAP enhancement. Existing CSS/IntersectionObserver remains the fallback.
+  if (!window.gsap || reduce) {
+    const intro=$('#introOverlay'); if(intro) intro.remove();
+    return;
+  }
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.config({nullTargetWarn:false});
+
+  // Intro: short editorial title card, then reveal the page.
+  const intro=$('#introOverlay');
+  if(intro){
+    const tl=gsap.timeline({defaults:{ease:'power3.out'},onComplete:()=>intro.remove()});
+    tl.to('.intro-mark',{opacity:1,y:0,rotation:0,duration:.55})
+      .to('.intro-kicker',{opacity:1,y:0,duration:.45},'-=.25')
+      .to('.intro-title',{opacity:1,y:0,scale:1,duration:.75},'-=.18')
+      .to('.intro-rule span',{scaleX:1,duration:.65,ease:'power2.inOut'},'-=.25')
+      .to('.intro-sub',{opacity:.72,y:0,duration:.4},'-=.3')
+      .to('.intro-inner',{y:-12,duration:.35,delay:.35,ease:'power2.in'})
+      .to(intro,{yPercent:-105,duration:.85,ease:'power4.inOut'},'-=.05');
+    gsap.set(['.intro-mark','.intro-kicker','.intro-title','.intro-sub'],{y:18});
+    gsap.set('.intro-title',{scale:.96});
+  }
+
+  // Hero text and artwork: only animate elements once, with a compact timeline.
+  const hero= $('.hero');
+  if(hero){
+    const heroTl=gsap.timeline({defaults:{ease:'power3.out'},delay:.12});
+    heroTl.from('.hero .eyebrow',{y:22,opacity:0,duration:.65})
+      .from('.hero h1',{y:48,opacity:0,clipPath:'inset(0 0 100% 0)',duration:.9},'-=.35')
+      .from('.hero-copy',{y:22,opacity:0,duration:.65},'-=.5')
+      .from('.hero-actions .btn',{y:18,opacity:0,stagger:.12,duration:.5},'-=.4')
+      .from('.hero-art',{y:45,opacity:0,rotation:1.5,duration:1},'-=.65');
+    gsap.to('.book-cover',{y:-9,rotation:-3.5,duration:3.4,yoyo:true,repeat:-1,ease:'sine.inOut',delay:1.8});
+    gsap.to('.book-shadow',{x:29,y:27,duration:3.4,yoyo:true,repeat:-1,ease:'sine.inOut',delay:1.8});
+  }
+
+  // Section headings reveal with a calm editorial cadence.
+  $$('.section-head').forEach((el)=>{
+    gsap.from(el.children,{scrollTrigger:{trigger:el,start:'top 82%',once:true},y:34,opacity:0,stagger:.14,duration:.8,ease:'power3.out'});
+  });
+  $$('.quote,.feature-card,.step,.rating-panel,.team-card').forEach((el,i)=>{
+    gsap.fromTo(el,{y:34,opacity:0,rotate: i%2===0 ? -1.1 : 1.1},{
+      y:0,opacity:1,rotate:0,duration:.75,ease:'power3.out',
+      scrollTrigger:{trigger:el,start:'top 88%',once:true}
+    });
+  });
+  $$('.quote-mark').forEach(mark=>{
+    gsap.from(mark,{scale:.4,rotation:-18,opacity:0,duration:.8,ease:'back.out(1.8)',scrollTrigger:{trigger:mark,start:'top 88%',once:true}});
+  });
+  $$('.kicker').forEach(el=>{
+    gsap.from(el,{x:-18,opacity:0,duration:.6,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
+  });
+
+  // Subtle parallax for decorative hero shapes, disabled on touch.
+  if(!coarse){
+    gsap.to('.hero:before',{rotation:42,x:-14,y:18,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:1}});
+    gsap.to('.hero:after',{rotation:135,x:12,y:-28,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:1}});
+  }
+
+  // Magnetic buttons, restrained to desktop pointer devices.
+  if(!coarse){
+    $$('.btn,.top-btn').forEach(btn=>{
+      btn.addEventListener('pointermove',e=>{
+        const r=btn.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
+        gsap.to(btn,{x:dx*.07,y:dy*.07,duration:.35,ease:'power3.out',overwrite:true});
+      });
+      btn.addEventListener('pointerleave',()=>gsap.to(btn,{x:0,y:0,duration:.55,ease:'elastic.out(1,.45)',overwrite:true}));
+    });
+  }
+
+  // Keep active-section highlighting in sync with the full page structure.
+  if (ScrollTrigger) ScrollTrigger.refresh();
+})();
+</script>
+
+</body>
+</html>
